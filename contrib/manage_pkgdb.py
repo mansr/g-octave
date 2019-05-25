@@ -50,9 +50,6 @@ class SfUpdates:
     # feed url from 'http://sourceforge.net/projects/octave/files/Octave%20Forge%20Packages/Individual%20Package%20Releases/'
     feed_url = u'https://sourceforge.net/projects/octave/rss?path=%2FOctave+Forge+Packages%2FIndividual+Package+Releases'
 
-    svnroot_url = u'http://svn.code.sf.net/p/octave/code/trunk/octave-forge'
-    categories = [u'main', u'extra', u'language', u'nonfree']
-
     _timestamp = None
 
     def __init__(self, local_dir, repo_dir):
@@ -120,12 +117,6 @@ class SfUpdates:
                 }
         return entries
 
-    def guess_category(self, pkgname):
-        for category in self.categories:
-            f = urllib.urlopen(self.svnroot_url + '/' + category + '/' + pkgname + '/DESCRIPTION')
-            if f.getcode() == 200:
-                return category
-
     def check_updates(self):
         local_files = self.local_files()
         remote_files = self.remote_files()
@@ -134,14 +125,14 @@ class SfUpdates:
             print('update found: %s; ' % remote, end='')
             sys.stdout.flush()
             updates[remote] = remote_files[remote]
-            category = self.guess_category(remote_files[remote]['name'])
+            remote_name = remote_files[remote]['name'].lower()
+            for local in local_files:
+                local_name = local_files[local]['name'].lower()
+                if remote_name == local_name:
+                    category = local_files[local]['category']
+                    break
             if category is None:
-                remote_name = remote_files[remote]['name'].lower()
-                for local in local_files:
-                    local_name = local_files[local]['name'].lower()
-                    if remote_name == local_name:
-                        category = local_files[local]['category']
-                        break
+                category = 'main'
             remote_files[remote]['category'] = category
             print('category: %s' % category)
             if self.download(remote, remote_files[remote]) != os.EX_OK:
