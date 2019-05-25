@@ -42,13 +42,14 @@ def create_overlay(force=False, conf=None, quiet=False):
         
         try:
             # creating dirs
-            for _dir in ['profiles', 'eclass']:
+            for _dir in ['profiles', 'eclass', 'metadata']:
                 dir = os.path.join(conf.overlay, _dir)
                 if not os.path.exists(dir) or force:
                     os.makedirs(dir, 0o755)
             
             # creating files
             files = {
+                os.path.join(conf.overlay, 'metadata', 'layout.conf'): 'masters = gentoo',
                 os.path.join(conf.overlay, 'profiles', 'repo_name'): 'g-octave',
                 os.path.join(conf.overlay, 'profiles', 'categories'): 'g-octave',
             }
