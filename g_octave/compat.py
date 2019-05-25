@@ -21,8 +21,8 @@ import sys
 
 py3k = sys.version_info >= (3, 0)
 
-def open(filename, mode='r', encoding='utf-8'):
+def open(filename, mode='r', encoding='utf-8', errors=None):
     try:
-        return codecs.open(filename, mode=mode, encoding=encoding)
+        return codecs.open(filename, mode=mode, encoding=encoding, errors=errors)
     except:
-        return codecs.open(filename, mode=mode, encoding='iso-8859-15')
+        return codecs.open(filename, mode=mode, encoding='iso-8859-15', errors=errors)
