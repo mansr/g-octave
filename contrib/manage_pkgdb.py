@@ -48,7 +48,7 @@ re_tarball = re.compile(r'(([^/]+)-([0-9.]+)\.tar\.gz)$')
 class SfUpdates:
 
     # feed url from 'http://sourceforge.net/projects/octave/files/Octave%20Forge%20Packages/Individual%20Package%20Releases/'
-    feed_url = u'http://sourceforge.net/api/file/index/project-id/2888/mtime/desc/rss?path=%2FOctave%20Forge%20Packages%2FIndividual%20Package%20Releases'
+    feed_url = u'https://sourceforge.net/projects/octave/rss?path=%2FOctave+Forge+Packages%2FIndividual+Package+Releases'
 
     svnroot_url = u'http://svn.code.sf.net/p/octave/code/trunk/octave-forge'
     categories = [u'main', u'extra', u'language', u'nonfree']
